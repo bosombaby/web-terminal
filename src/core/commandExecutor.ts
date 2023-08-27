@@ -20,12 +20,16 @@ export const doCommandExecute = async (
   if (!text) {
     return;
   }
+
+  console.log('2 得到命令', text);
+
   // 解析文本，得到命令
   const command: CommandType = getCommand(text, parentCommand);
   if (!command) {
     terminal.writeTextErrorResult("找不到命令");
     return;
   }
+
   // 解析参数（需传递不同的解析规则）
   const parsedOptions = doParse(text, command.options);
   const { _ } = parsedOptions;
@@ -40,6 +44,7 @@ export const doCommandExecute = async (
     await doCommandExecute(subText, terminal, command);
     return;
   }
+
   // 执行命令
   await doAction(command, parsedOptions, terminal, parentCommand);
 };
@@ -51,6 +56,9 @@ export const doCommandExecute = async (
  */
 const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
   let func = text.split(" ", 1)[0];
+
+  console.log('3 解析开头命令', func);
+
   // 大小写无关
   func = func.toLowerCase();
   let commands = commandMap;
@@ -63,7 +71,8 @@ const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
     commands = parentCommand.subCommands;
   }
   const command = commands[func];
-  console.log("getCommand = ", command);
+
+  console.log('3 匹配命令，到map命令集搜索', command);
   return command;
 };
 
@@ -96,7 +105,7 @@ const doParse = (
     }
   });
   const parsedOptions = getopts(args, options);
-  console.log("parsedOptions = ", parsedOptions);
+  console.log('3 => 解析器执行', parsedOptions);
   return parsedOptions;
 };
 
@@ -125,5 +134,8 @@ const doAction = async (
     helpCommand.action(newOptions, terminal, parentCommand);
     return;
   }
+
+  console.log('4 执行命令');
+
   await command.action(options, terminal);
 };

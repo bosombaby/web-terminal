@@ -1,33 +1,19 @@
 <template>
-  <div
-    class="yu-terminal-wrapper"
-    :style="wrapperStyle"
-    @click="handleClickWrapper"
-  >
+  <!-- 终端外侧背景 -->
+  <div class="yu-terminal-wrapper" :style="wrapperStyle" @click="handleClickWrapper">
     <div ref="terminalRef" class="yu-terminal" :style="mainStyle">
-      <a-collapse
-        v-model:activeKey="activeKeys"
-        :bordered="false"
-        expand-icon-position="right"
-      >
+      <!-- 折叠块 -->
+      <a-collapse v-model:activeKey="activeKeys" :bordered="false" expand-icon-position="right">
         <template v-for="(output, index) in outputList" :key="index">
           <!-- 折叠 -->
-          <a-collapse-panel
-            v-if="output.collapsible"
-            :key="index"
-            class="terminal-row"
-          >
+          <a-collapse-panel v-if="output.collapsible" :key="index" class="terminal-row">
             <template #header>
               <span style="user-select: none; margin-right: 10px">
                 {{ prompt }}
               </span>
               <span>{{ output.text }}</span>
             </template>
-            <div
-              v-for="(result, idx) in output.resultList"
-              :key="idx"
-              class="terminal-row"
-            >
+            <div v-for="(result, idx) in output.resultList" :key="idx" class="terminal-row">
               <content-output :output="result" />
             </div>
           </a-collapse-panel>
@@ -41,11 +27,7 @@
                 }}</span>
                 <span>{{ output.text }}</span>
               </div>
-              <div
-                v-for="(result, idx) in output?.resultList"
-                :key="idx"
-                class="terminal-row"
-              >
+              <div v-for="(result, idx) in output?.resultList" :key="idx" class="terminal-row">
                 <content-output :output="result" />
               </div>
             </template>
@@ -58,17 +40,11 @@
           </template>
         </template>
       </a-collapse>
+
+      <!-- 终端输入框 -->
       <div class="terminal-row">
-        <a-input
-          ref="commandInputRef"
-          v-model:value="inputCommand.text"
-          :disabled="isRunning"
-          class="command-input"
-          :placeholder="inputCommand.placeholder"
-          :bordered="false"
-          autofocus
-          @press-enter="doSubmitCommand"
-        >
+        <a-input ref="commandInputRef" v-model:value="inputCommand.text" :disabled="isRunning" class="command-input"
+          :placeholder="inputCommand.placeholder" :bordered="false" autofocus @press-enter="doSubmitCommand">
           <template #addonBefore>
             <span class="command-input-prompt">{{ prompt }}</span>
           </template>
@@ -78,7 +54,8 @@
       <div v-if="hint && !isRunning" class="terminal-row" style="color: #bbb">
         hint：{{ hint }}
       </div>
-      <div style="margin-bottom: 16px" />
+      <div style="margin-bottom: 16px"></div>
+
     </div>
   </div>
 </template>
@@ -171,6 +148,7 @@ const { hint, setHint, debounceSetHint } = useHint();
  * 提交命令（回车）
  */
 const doSubmitCommand = async () => {
+
   isRunning.value = true;
   setHint("");
   let inputText = inputCommand.value.text;
@@ -190,6 +168,7 @@ const doSubmitCommand = async () => {
   };
   // 记录当前命令，便于写入结果
   currentNewCommand = newCommand;
+
   // 执行命令
   await props.onSubmitCommand?.(inputText);
   // 添加输出（为空也要输出换行）
@@ -236,8 +215,8 @@ const mainStyle = computed(() => {
   return props.fullScreen
     ? fullScreenStyle
     : {
-        height: props.height,
-      };
+      height: props.height,
+    };
 });
 
 /**
@@ -350,9 +329,8 @@ const isInputFocused = () => {
  */
 const setTabCompletion = () => {
   if (hint.value) {
-    inputCommand.value.text = `${hint.value.split(" ")[0]}${
-      hint.value.split(" ").length > 1 ? " " : ""
-    }`;
+    inputCommand.value.text = `${hint.value.split(" ")[0]}${hint.value.split(" ").length > 1 ? " " : ""
+      }`;
   }
 };
 
@@ -406,11 +384,11 @@ onMounted(() => {
   } else {
     terminal.writeTextOutput(
       `Welcome to YuIndex, coolest browser index for geeks!` +
-        `<a href="//github.com/liyupi/yuindex" target='_blank'> GitHub Open Source</a>`
+      `<a href="//github.com/liyupi/yuindex" target='_blank'> GitHub Open Source</a>`
     );
     terminal.writeTextOutput(
       `Author <a href="//docs.qq.com/doc/DUFFRVWladXVjeUxW" target="_blank">coder_yupi</a>` +
-        `: please input 'help' to enjoy`
+      `: please input 'help' to enjoy`
     );
     terminal.writeTextOutput("<br/>");
   }
@@ -450,10 +428,7 @@ defineExpose({
   font-size: 16px;
 }
 
-.yu-terminal
-  :deep(.ant-collapse-icon-position-right
-    > .ant-collapse-item
-    > .ant-collapse-header) {
+.yu-terminal :deep(.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header) {
   color: white;
   padding: 0;
 }

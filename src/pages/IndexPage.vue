@@ -1,10 +1,5 @@
 <template>
-  <yu-terminal
-    ref="terminalRef"
-    :user="loginUser"
-    full-screen
-    :on-submit-command="onSubmitCommand"
-  />
+  <yu-terminal ref="terminalRef" :user="loginUser" full-screen :on-submit-command="onSubmitCommand" />
 </template>
 
 <script setup lang="ts">
@@ -20,6 +15,9 @@ const onSubmitCommand = async (inputText: string) => {
     return;
   }
   const terminal = terminalRef.value.terminal;
+
+  console.log('1 接受终端输入', inputText, terminal);
+
   await doCommandExecute(inputText, terminal);
 };
 
