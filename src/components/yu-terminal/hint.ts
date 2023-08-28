@@ -13,6 +13,8 @@ const useHint = () => {
   const { showHint } = useTerminalConfigStore();
 
   const setHint = (inputText: string) => {
+
+    console.log('开始提示', inputText);
     // 未开启提示
     if (!showHint) {
       return;
@@ -28,6 +30,8 @@ const useHint = () => {
     const likeKey = Object.keys(commandMap).filter((key) =>
       key.startsWith(func)
     )[0];
+    console.log(likeKey);
+
     let command = commandMap[likeKey];
     if (!command) {
       hint.value = "";

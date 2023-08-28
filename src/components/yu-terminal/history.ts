@@ -7,6 +7,7 @@ import CommandInputType = YuTerminal.CommandInputType;
  * @param commandList
  * @param inputCommand
  */
+
 const useHistory = (
   commandList: CommandOutputType[],
   inputCommand: Ref<CommandInputType>
