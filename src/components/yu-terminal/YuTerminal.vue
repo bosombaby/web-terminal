@@ -160,6 +160,9 @@ const doSubmitCommand = async () => {
       inputText = command.text;
     }
   }
+
+  console.log('1 获取微终端输入', inputText);
+
   // 执行命令
   const newCommand: CommandOutputType = {
     text: inputText,
@@ -168,6 +171,8 @@ const doSubmitCommand = async () => {
   };
   // 记录当前命令，便于写入结果
   currentNewCommand = newCommand;
+
+  console.log('1 数据传入父组件');
 
   // 执行命令
   await props.onSubmitCommand?.(inputText);

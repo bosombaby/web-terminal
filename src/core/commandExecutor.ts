@@ -135,7 +135,8 @@ const doAction = async (
     return;
   }
 
-  console.log('4 执行命令');
 
-  await command.action(options, terminal);
+
+  const result = await command.action(options, terminal);
+  console.log('4 执行命令', result);
 };

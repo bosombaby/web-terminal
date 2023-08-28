@@ -24,6 +24,9 @@ import welcomeCommand from "./commands/terminal/config/welcomeCommand";
 import hotCommand from "./commands/hot/hotCommand";
 import ikuntestCommand from "./commands/relax/ikuntest/ikuntestCommand";
 import varbookCommand from "./commands/varbook/varbookCommand";
+import helloCommand from "./commands/hello/helloCommand";
+
+
 
 /**
  * 命令列表（数组元素顺序会影响 help 命令的展示顺序）
@@ -54,6 +57,7 @@ const commandList: CommandType[] = [
   backgroundCommand,
   resetCommand,
   hintCommand,
+  helloCommand
 ];
 
 /**
