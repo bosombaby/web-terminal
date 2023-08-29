@@ -184,6 +184,8 @@ const doSubmitCommand = async () => {
     // 重置当前要查看的命令位置
     commandHistoryPos.value = commandList.value.length;
   }
+
+  // 重置输入框命令
   inputCommand.value = { ...initCommand };
   // 默认展开折叠面板
   activeKeys.value.push(outputList.value.length - 1);
@@ -259,6 +261,9 @@ const writeTextResult = (text: string, status?: OutputStatusType) => {
     status,
   };
   currentNewCommand.resultList.push(newOutput);
+
+  // console.log('执行错误', currentNewCommand);
+
 };
 
 /**

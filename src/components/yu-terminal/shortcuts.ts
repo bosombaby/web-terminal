@@ -19,8 +19,6 @@ export const registerShortcuts = (terminal: TerminalType) => {
     }
     // 匹配快捷键
     let code = e.code;
-    console.log(code);
-
     for (const shortcut of shortcutList) {
       if (
         code === shortcut.code &&
