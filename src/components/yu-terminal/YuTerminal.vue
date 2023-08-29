@@ -260,10 +260,8 @@ const writeTextResult = (text: string, status?: OutputStatusType) => {
     type: "text",
     status,
   };
+
   currentNewCommand.resultList.push(newOutput);
-
-  // console.log('执行错误', currentNewCommand);
-
 };
 
 /**
@@ -393,12 +391,11 @@ onMounted(() => {
     });
   } else {
     terminal.writeTextOutput(
-      `Welcome to YuIndex, coolest browser index for geeks!` +
-      `<a href="//github.com/liyupi/yuindex" target='_blank'> GitHub Open Source</a>`
+      `欢迎来到 web 终端系统，系统源码：` +
+      `<a href="https://github.com/bosombaby/web-terminal" target="_blank">GitHub</a>`
     );
     terminal.writeTextOutput(
-      `Author <a href="//docs.qq.com/doc/DUFFRVWladXVjeUxW" target="_blank">coder_yupi</a>` +
-      `: please input 'help' to enjoy`
+      `please input 'help' to enjoy`
     );
     terminal.writeTextOutput("<br/>");
   }
