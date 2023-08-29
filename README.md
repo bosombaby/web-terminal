@@ -1,21 +1,5 @@
 # YuIndex - 极客范儿的浏览器主页
 
-> Coolest browser index for geeks! 
-> 
-> 前后端全栈项目 By [程序员鱼皮](https://docs.qq.com/doc/DUFFRVWladXVjeUxW)
-
-
-
-在线体验：[http://yuindex.yupi.icu](http://yuindex.yupi.icu)
-
-视频演示：[https://www.bilibili.com/video/BV19B4y1Y7m8/](https://www.bilibili.com/video/BV19B4y1Y7m8/)
-
-![YuIndex 定制你的最强主页](./doc/assets/docpic1.png)
-
-![YuIndex 用命令来控制网页](./doc/assets/docpic2.png)
-
-⭐️ 我在自己的 [编程知识星球](https://yupi.icu) 内花 4 个小时直播给大家详细解读了这个项目的创作思路 + 技术选型 + 系统设计 + 源码解读 + 思路扩展 + 简历亮点分享，如果你希望把这个项目写到简历上、或者深入学习，[欢迎加入我的星球观看](https://yupi.icu/%E6%98%9F%E7%90%83%E9%A1%B9%E7%9B%AE/Web%20%E7%BB%88%E7%AB%AF%E9%A1%B9%E7%9B%AE.html) 。
-
 
 ## YuIndex 是什么？
 
@@ -37,9 +21,7 @@
 
 ### 1 分钟上手使用
 
-请打开网站：https://yuindex.com
 
-然后在网站内依次输入以下命令：
 
 ```bash
 baidu 程序员鱼皮
@@ -177,8 +159,6 @@ history
 
 [点击了解后端详情](server/README.md)
 
-
-
 ## 目录结构
 
 - public 公共静态资源
@@ -283,12 +263,6 @@ history
 1. 本来打算使用现成的 xterm.js，但实际使用中发现它的文档比较少、问题难解决（比如中文字符），解决问题消耗的时间足够自己写一套新的 web 终端了。而且它更适用于和后端服务器强交互的场景，与本项目的定位不符。
 2. 开源的 web 终端很少，给开源贡献一份力。
 3. 帮助自己复习 Vue，突破个人系统开发设计能力的边界。
-
-
-
-### 更多讲解
-
-如果你希望获取该项目的完整详细讲解，欢迎加入 [鱼皮的编程知识星球](https://yupi.icu/) ，这是鱼皮的编程学习圈子，我会在圈子内带大家从 0 到 1 分析解读这个项目，让你也能独立做一个，项目经历 + 1。
 
 
 
