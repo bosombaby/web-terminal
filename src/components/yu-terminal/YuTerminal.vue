@@ -173,11 +173,11 @@ const doSubmitCommand = async () => {
   currentNewCommand = newCommand;
 
   console.log('1 数据传入父组件');
-
   // 执行命令
   await props.onSubmitCommand?.(inputText);
   // 添加输出（为空也要输出换行）
   outputList.value.push(newCommand);
+
   // 不为空字符串才算是有效命令
   if (inputText) {
     commandList.value.push(newCommand);

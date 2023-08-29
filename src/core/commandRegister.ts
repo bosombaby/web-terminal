@@ -55,7 +55,7 @@ const commandList: CommandType[] = [
   backgroundCommand,
   resetCommand,
   hintCommand,
-  helloCommand
+  helloCommand,
 ];
 
 /**

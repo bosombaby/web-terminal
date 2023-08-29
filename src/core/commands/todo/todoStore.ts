@@ -51,11 +51,13 @@ export const useTodoStore = defineStore("todo", {
      * @param index
      */
     deleteTask(index: number) {
-      if (index < 0 || index >= this.taskList.length) {
-        return false;
-      }
+
+      // 命令作了一次判断，这次省去
+      // if (index < 0 || index >= this.taskList.length) {
+      //   return false;
+      // }
       this.taskList.splice(index, 1);
-      return true;
+      // return true;
     },
     /**
      * 更新任务

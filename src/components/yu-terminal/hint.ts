@@ -13,8 +13,7 @@ const useHint = () => {
   const { showHint } = useTerminalConfigStore();
 
   const setHint = (inputText: string) => {
-
-    console.log('开始提示', inputText);
+    // console.log('开始提示', inputText);
     // 未开启提示
     if (!showHint) {
       return;

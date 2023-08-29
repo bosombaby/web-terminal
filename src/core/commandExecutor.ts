@@ -25,6 +25,7 @@ export const doCommandExecute = async (
 
   // 解析文本，得到命令
   const command: CommandType = getCommand(text, parentCommand);
+
   if (!command) {
     terminal.writeTextErrorResult("找不到命令");
     return;
@@ -87,6 +88,7 @@ const doParse = (
 ): getopts.ParsedOptions => {
   // 过滤掉关键词
   const args: string[] = text.split(" ").slice(1);
+  console.log('3 => 过滤掉关键词', args);
   // 转换
   const options: getopts.Options = {
     alias: {},
@@ -94,6 +96,7 @@ const doParse = (
     string: [],
     boolean: [],
   };
+
   commandOptions.forEach((commandOption) => {
     const { alias, key, type, defaultValue } = commandOption;
     if (alias && options.alias) {
@@ -135,8 +138,7 @@ const doAction = async (
     return;
   }
 
-
-
+  // 执行命令
   const result = await command.action(options, terminal);
   console.log('4 执行命令', result);
 };
