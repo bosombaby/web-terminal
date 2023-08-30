@@ -1,15 +1,15 @@
-import { ref } from "vue";
-import { getUsageStr } from "../../core/commands/terminal/help/helpUtils";
-import { commandMap } from "../../core/commandRegister";
-import _, { trim } from "lodash";
-import { useTerminalConfigStore } from "../../core/commands/terminal/config/terminalConfigStore";
+import { ref } from 'vue';
+import { getUsageStr } from '../../core/commands/terminal/help/helpUtils';
+import { commandMap } from '../../core/commandRegister';
+import _, { trim } from 'lodash';
+import { useTerminalConfigStore } from '../../core/commands/terminal/config/terminalConfigStore';
 
 /**
  * 命令提示功能
  * @author yupi
  */
 const useHint = () => {
-  const hint = ref("");
+  const hint = ref('');
   const { showHint } = useTerminalConfigStore();
 
   const setHint = (inputText: string) => {
@@ -19,21 +19,21 @@ const useHint = () => {
       return;
     }
     if (!inputText) {
-      hint.value = "";
+      hint.value = '';
       return;
     }
-    const args = trim(inputText).split(" ");
+    const args = trim(inputText).split(' ');
     // 大小写无关
     let func = args[0].toLowerCase();
     // 前缀匹配
     const likeKey = Object.keys(commandMap).filter((key) =>
-      key.startsWith(func)
+      key.startsWith(func),
     )[0];
     console.log(likeKey);
 
     let command = commandMap[likeKey];
     if (!command) {
-      hint.value = "";
+      hint.value = '';
       return;
     }
     // 子命令提示
