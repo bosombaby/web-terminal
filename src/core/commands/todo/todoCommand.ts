@@ -4,7 +4,6 @@ import ComponentOutputType = YuTerminal.ComponentOutputType;
 import addCommand from "./subCommands/addCommand";
 import deleteCommand from "./subCommands/deleteCommand";
 
-
 /**
  * 待办事项命令
  * @author yupi
@@ -18,12 +17,12 @@ const todoCommand: CommandType = {
       key: "subCommand",
       desc: "子命令",
       required: true,
-    }
+    },
   ],
   options: [],
   subCommands: {
     add: addCommand,
-    delete: deleteCommand
+    delete: deleteCommand,
   },
   collapsible: true,
   action(options, terminal) {
