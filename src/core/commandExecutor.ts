@@ -21,7 +21,7 @@ export const doCommandExecute = async (
     return;
   }
 
-  console.log('2 得到命令', text);
+  console.log("2 得到命令", text);
 
   // 解析文本，得到命令
   const command: CommandType = getCommand(text, parentCommand);
@@ -58,7 +58,7 @@ export const doCommandExecute = async (
 const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
   let func = text.split(" ", 1)[0];
 
-  console.log('3 解析开头命令', func);
+  console.log("3 解析开头命令", func);
 
   // 大小写无关
   func = func.toLowerCase();
@@ -73,7 +73,7 @@ const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
   }
   const command = commands[func];
 
-  console.log('3 匹配命令，到map命令集搜索', command);
+  console.log("3 匹配命令，到map命令集搜索", command);
   return command;
 };
 
@@ -88,7 +88,7 @@ const doParse = (
 ): getopts.ParsedOptions => {
   // 过滤掉关键词
   const args: string[] = text.split(" ").slice(1);
-  console.log('3 => 过滤掉关键词', args);
+  console.log("3 => 过滤掉关键词", args);
   // 转换
   const options: getopts.Options = {
     alias: {},
@@ -108,7 +108,7 @@ const doParse = (
     }
   });
   const parsedOptions = getopts(args, options);
-  console.log('3 => 解析器执行', parsedOptions);
+  console.log("3 => 解析器执行", parsedOptions);
   return parsedOptions;
 };
 
@@ -140,5 +140,5 @@ const doAction = async (
 
   // 执行命令
   const result = await command.action(options, terminal);
-  console.log('4 执行命令', result);
+  console.log("4 执行命令", result);
 };
