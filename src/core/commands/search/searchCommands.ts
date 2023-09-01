@@ -10,11 +10,10 @@ import githubCommand from "./githubCommand";
 import googleCommand from "./googleCommand";
 import wangyiyunCommand from "./wangyiyunCommand";
 import zhihuCommand from "./zhihuCommand";
-import gengCommand from "./gengCommand";
 import duckduckgoCommand from "./duckduckgoCommand";
 import fsearchCommand from "./fsearchCommand";
 import sogouCommand from "./sogouCommand";
-import mdnCommand from "./mdnCommand"
+import mdnCommand from "./mdnCommand";
 
 /**
  * 搜索源
@@ -34,8 +33,7 @@ const fromDict: Record<string, CommandType> = {
   sogou: sogouCommand,
   wangyiyun: wangyiyunCommand,
   zhihu: zhihuCommand,
-  geng: gengCommand,
-  mdn: mdnCommand
+  mdn: mdnCommand,
 };
 
 /**

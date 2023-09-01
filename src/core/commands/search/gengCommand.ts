@@ -1,7 +1,7 @@
 import { CommandType } from "../../command";
 
 /**
- * 查梗（小鸡词典）命令
+ * 查梗（小鸡词典）命令，停服通知，暂停命令注册
  * @author yupi
  */
 const gengCommand: CommandType = {
