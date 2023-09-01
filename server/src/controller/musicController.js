@@ -1,4 +1,7 @@
-const { getSingleMusic, getPlaylistDetail } = require("../service/musicService");
+const {
+  getSingleMusic,
+  getPlaylistDetail,
+} = require("../service/musicService");
 const MyError = require("../exception");
 const {
   REQUEST_PARAMS_ERROR_CODE,

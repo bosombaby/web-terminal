@@ -428,7 +428,9 @@ onMounted(() => {
   }
 });
 
-onBeforeUpdate(() => {});
+onBeforeUpdate(() => {
+  console.log("outputList", outputList);
+});
 
 /**
  * 当点击空白聚焦输入框

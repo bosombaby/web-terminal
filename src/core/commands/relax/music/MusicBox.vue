@@ -22,6 +22,8 @@ interface MusicBoxProps {
 }
 
 const props = withDefaults(defineProps<MusicBoxProps>(), {});
+console.log("传入的对象", props);
+
 const { name } = toRefs(props);
 const musicPath = ref("");
 const errorHint = ref("");
