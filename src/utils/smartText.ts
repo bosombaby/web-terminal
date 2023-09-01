@@ -12,7 +12,7 @@ const smartText = (text?: string) => {
   if (!text) {
     return text;
   }
-  const reg = new RegExp(URL_REG, 'gi');
+  const reg = new RegExp(URL_REG, "gi");
   return text.replaceAll(reg, "<a href='$1' target='_blank'>$1</a>");
 };
 

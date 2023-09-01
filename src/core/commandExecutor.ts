@@ -97,7 +97,11 @@ const doParse = (
     boolean: [],
   };
 
+  console.log("解析前", options);
+
   commandOptions.forEach((commandOption) => {
+    console.log("原始命令", commandOption);
+
     const { alias, key, type, defaultValue } = commandOption;
     if (alias && options.alias) {
       options.alias[key] = alias;
@@ -106,7 +110,10 @@ const doParse = (
     if (defaultValue && options.default) {
       options.default[key] = defaultValue;
     }
+
+    console.log("解析命令", options);
   });
+
   const parsedOptions = getopts(args, options);
   console.log("3 => 解析器执行", parsedOptions);
   return parsedOptions;

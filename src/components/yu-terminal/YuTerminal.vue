@@ -95,7 +95,9 @@ import {
   ref,
   StyleValue,
   toRefs,
+  watch,
   watchEffect,
+  onBeforeUpdate,
 } from "vue";
 import CommandOutputType = YuTerminal.CommandOutputType;
 import OutputType = YuTerminal.OutputType;
@@ -425,6 +427,8 @@ onMounted(() => {
     terminal.writeTextOutput("<br/>");
   }
 });
+
+onBeforeUpdate(() => {});
 
 /**
  * 当点击空白聚焦输入框
