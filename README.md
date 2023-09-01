@@ -1,5 +1,6 @@
 # 一、前言
-**项目概述**：通过命令行的方式在浏览器运行的一个工具库
+**项目概述**：利用暑假的时间在[知识星球](https://wx.zsxq.com/dweb2/index/group/51122858222824)学习[鱼皮](https://space.bilibili.com/12890453/)的 web 终端项目，这是一个通过命令行的方式在浏览器运行的一个工具库
+
 **项目亮点**：
 
 - 避免反复跳转网页，功能全部集成到命令集中，通过像 Linux 一样终端输入输出的方式，更加炫酷
@@ -8,6 +9,7 @@
 - 做这种东西自己会更有兴趣和动力
 
 **开源地址**：[web-terminal](https://github.com/bosombaby/web-terminal)
+
 **命令手册**：command lsit
 # 二、系统运行
 ## 2.1 后台运行
@@ -103,15 +105,170 @@ yarn run dev
 3. 用户执行的命令会存储到列表中，方便历史命令接口查询
 4. 快捷键如清空屏幕、上下键
 5. 操作接口主要是暴露给命令系统的方法，规定可以对终端做哪些操作
+### 4.1.1 输入
+```javascript
+const onSubmitCommand = async (inputText: string) => {
+  if (!inputText) {
+    return;
+  }
+  const terminal = terminalRef.value.terminal;
+
+  console.log("1 接受终端输入", inputText, terminal);
+
+  await doCommandExecute(inputText, terminal);
+};
+```
+
+- 将终端封装成一个组件的形式，外部进行调用
+- 外部接受到组件的输入，然后才调用命令系统（分离逻辑，扩展更加容易）
+### 4.1.2 提示
+
+- 用户输入使用 watchEffect 追踪，调用 hint.ts 方法
+- 使用前缀匹配命令集 map 中第一个命令，返回值，临时渲染到输入框下方
+### 4.1.3 历史 
+```typescript
+const commandList = ref<CommandOutputType[]>([]);
+```
+
+- 使用数组列表存储过往数据
+- 控制索引，可以根据上下键、list命令查看历史命令
+### 4.1.4 快捷键 
+```typescript
+export const registerShortcuts = (terminal: TerminalType) => {
+  document.onkeydown = (e) => {
+    // console.log(e);
+    let key = e.key;
+    // 自动聚焦输入框
+    if (key >= "a" && key <= "z" && !e.metaKey && !e.shiftKey && !e.ctrlKey) {
+      terminal.focusInput();
+      return;
+    }
+    // 匹配快捷键
+    let code = e.code;
+    for (const shortcut of shortcutList) {
+      if (
+        code === shortcut.code &&
+        e.ctrlKey == !!shortcut.ctrlKey &&
+        e.metaKey == !!shortcut.metaKey &&
+        e.shiftKey == !!shortcut.shiftKey
+      ) {
+        shortcut.action(e, terminal);
+      }
+    }
+  };
+};
+```
+
+- 全局监听用户键盘输入，并且匹配对应的方法
+### 4.1.5 操作接口
+```typescript
+/**
+ * 操作终端的对象
+ */
+const terminal: TerminalType = {
+  writeTextResult,
+  writeTextErrorResult,
+  writeTextSuccessResult,
+  writeResult,
+  writeTextOutput,
+  writeOutput,
+  clear,
+  focusInput,
+  isInputFocused,
+  setTabCompletion,
+  doSubmitCommand,
+  showNextCommand,
+  showPrevCommand,
+  listCommandHistory,
+  toggleAllCollapse,
+  setCommandCollapsible,
+};
+```
+
+- 微终端可以暴露给外部的操作接口
+- 防止未按照规定方式操作屏幕
 ## 4.2 命令系统
 
 1. 采用匹配 => 解析 => 执行机制实现
 2. 子命令通过递归的方式实现子命令解析
+### 4.2.1 匹配
+```typescript
+const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
+  let func = text.split(" ", 1)[0];
+
+  console.log("3 解析开头命令", func);
+
+  // 大小写无关
+  func = func.toLowerCase();
+  let commands = commandMap;
+  // 有父命令，则从父命令中查找
+  if (
+    parentCommand &&
+    parentCommand.subCommands &&
+    Object.keys(parentCommand.subCommands).length > 0
+  ) {
+    commands = parentCommand.subCommands;
+  }
+  const command = commands[func];
+
+  console.log("3 匹配命令，到map命令集搜索", command);
+  return command;
+};
+```
+
+- 首次获取传入的text文本，分割首位命令
+- 如果有子命令，递归调用函数判断
+### 4.2.2 解析
+**命令行解析工具**：
+[GitHub - jorgebucaran/getopts: Node.js CLI options parser](https://github.com/jorgebucaran/getopts)
+
+```typescript
+/**
+ * 命令类型
+ */
+interface CommandType {
+  // 命令英文 key（必须唯一）
+  func: string;
+  // 命令名称
+  name: string;
+  // 介绍
+  desc?: string;
+  // 功能别名
+  alias?: string[];
+  // 参数配置
+  params?: CommandParamsType[];
+  // 选项配置
+  options: CommandOptionType[];
+  // 子命令
+  subCommands?: Record<string, CommandType>;
+  // 执行功能
+  action: (
+    options: ParsedOptions,
+    terminal: TerminalType,
+    parentCommand?: CommandType
+  ) => void;
+  // 结果是否允许折叠
+  collapsible?: boolean;
+}
+```
+### 4.2.3 执行
+
+- 调用命令action的方法
+- 将结果展示到终端上面
 ## 4.3 命令集
 
 1. 以单文件分离的方法管理命令集
 2. 统一规范命令集
 3. 使用 Map ：key  - value 存储结果，避免循环搜索
+## 4.4 前后台交互
+:::info
+需要进行前后端交互，即获取数据的接口如下
+:::
+
+- 用户模块：user
+- 翻译模块：fanyi
+- 背景图片：bg
+- 音乐模块：music
 # 五、思路扩展
 
 1. 增加更多的命令
@@ -119,7 +276,9 @@ yarn run dev
 3. 解决性能优化
 4. 适配移动端、桌面端开发
 5. 接入gpt形成对话功能模块
-6. 私有化存储收藏夹，分类查询修改
+6. 开发和用户交互的小游戏，比如猜拳......
+7. 私有化存储收藏夹，分类查询修改
+8. 优化数据存储，目前数据大部分存储在浏览器，后续可以把一些数据量大的过渡到 MySQL 数据库
 # 六、个人收获
 
 - 利用暑假的时间在[知识星球](https://wx.zsxq.com/dweb2/index/group/51122858222824)学习鱼皮的 web 终端项目，学到了很多知识
@@ -129,6 +288,8 @@ yarn run dev
 - 学习了如何通过 ESLint + Prettier + TypeScript 更好的约束代码开发，学习了前端代码工程化
 # 七、后续任务
 
+- [ ] 开发一个获取头像的接口命令
+- [ ] 用户登录修改为 linux 模式
 - [ ] 完善 todo 命令
 - [ ] 扩展后台，目前只有调用翻译、音乐接口、用户登录功能
 - [ ] 接入 gpt 进行聊天
@@ -139,20 +300,7 @@ yarn run dev
 **pinia如何使用持久化**
 [Pinia的使用以及数据持久化 - 掘金](https://juejin.cn/post/7101657189428756516)
 
-**命令行解析工具**：
-[GitHub - jorgebucaran/getopts: Node.js CLI options parser](https://github.com/jorgebucaran/getopts)
+**组件库**
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+[Ant Design Vue — An enterprise-class UI components based on Ant Design and Vue.js](https://antdv.com/components/overview)
 
