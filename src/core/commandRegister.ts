@@ -25,6 +25,7 @@ import hotCommand from "./commands/hot/hotCommand";
 import ikuntestCommand from "./commands/relax/ikuntest/ikuntestCommand";
 import varbookCommand from "./commands/varbook/varbookCommand";
 import helloCommand from "./commands/space/helloCommand";
+import avatarCommand from "./commands/avatar/avatarCommand";
 
 /**
  * 命令列表（数组元素顺序会影响 help 命令的展示顺序）
@@ -56,6 +57,7 @@ const commandList: CommandType[] = [
   resetCommand,
   hintCommand,
   helloCommand,
+  avatarCommand,
 ];
 
 /**

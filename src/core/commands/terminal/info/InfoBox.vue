@@ -8,15 +8,14 @@
   <div></div>
   <div>
     作者：
-    <a href="https://resume.vrteam.top/" target="_blank">
-      bosom
-    </a>
+    <a href="https://resume.vrteam.top/" target="_blank"> bosom </a>
   </div>
 </template>
 
 <script setup lang="ts">
 interface InfoBoxProps {
   seconds: string;
+  name: string;
 }
 
 const props = withDefaults(defineProps<InfoBoxProps>(), {});

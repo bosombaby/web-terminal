@@ -24,6 +24,7 @@ interface OutputProps {
 }
 
 const props = defineProps<OutputProps>();
+
 const { output } = toRefs(props);
 const outputTagColor = computed((): string => {
   if (!output.value.status) {

@@ -86,7 +86,7 @@ const doParse = (
   text: string,
   commandOptions: CommandOptionType[]
 ): getopts.ParsedOptions => {
-  // 过滤掉关键词
+  // 过滤掉关键词，有bug，匹配到只剩下一个空格
   const args: string[] = text.split(" ").slice(1);
   console.log("3 => 过滤掉关键词", args);
   // 转换
@@ -115,6 +115,8 @@ const doParse = (
   });
 
   const parsedOptions = getopts(args, options);
+  console.log(parsedOptions._);
+
   console.log("3 => 解析器执行", parsedOptions);
   return parsedOptions;
 };
